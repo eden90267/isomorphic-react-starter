@@ -1,23 +1,23 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ProvidePlugin = require('webpack/lib/ProvidePlugin')
 
-const ENV = process.env.NODE_ENV || 'development';
-const DEV_MODE = ENV === 'development';
-console.log('DEV_MODE:', DEV_MODE);
+const ENV = process.env.NODE_ENV || 'development'
+const DEV_MODE = ENV === 'development'
+console.log('DEV_MODE:', DEV_MODE)
 
-process.noDeprecation = true;
+process.noDeprecation = true
 
 const toFilename = (name, ext = 'js') => {
-  const units = [name, '.', ext];
+  const units = [name, '.', ext]
   if (!DEV_MODE) {
-    const hashStr = (ext === 'css' ? '-[contenthash]' : '-[chunkhash]');
-    units.splice(1, 0, hashStr);
+    const hashStr = (ext === 'css' ? '-[contenthash]' : '-[chunkhash]')
+    units.splice(1, 0, hashStr)
   }
-  return units.join('');
-};
+  return units.join('')
+}
 
 module.exports = {
   entry: {
@@ -107,7 +107,7 @@ module.exports = {
       minChunks: Infinity,
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': DEV_MODE ? "'development'" : '"production"',
+      'process.env.NODE_ENV': JSON.stringify(DEV_MODE ? 'development' : 'production'),
     }),
     new HtmlWebpackPlugin({
       template: '!!raw-loader!src/index.ejs',
@@ -124,4 +124,4 @@ module.exports = {
       Popper: ['popper.js', 'default']
     }),
   ]
-};
+}

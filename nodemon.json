@@ -1,0 +1,17 @@
+{
+  "watch": [
+    "index.js",
+    "app.js",
+    "routes",
+    "dist"
+  ],
+  "ignore": [
+    "src/*",
+    "node_modules/*",
+    "webpack.config.js",
+    "package.json",
+    "package-lock.json",
+    ".eslintrc.yml",
+    "*.test.js"
+  ]
+}
