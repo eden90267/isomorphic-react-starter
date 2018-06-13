@@ -19,7 +19,7 @@ const toFilename = (name, ext = 'js') => {
   return units.join('')
 }
 
-module.exports = {
+const config = {
   entry: {
     all: ['./src/js/index.js'],
     vendor: ['react', 'react-dom', 'jquery', 'popper.js', 'bootstrap', 'moment']
@@ -122,6 +122,48 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
-    }),
+    })
   ]
 }
+
+if (DEV_MODE) {
+  const NodemonPlugin = require( 'nodemon-webpack-plugin' )
+  const LiveReloadPlugin = require('webpack-livereload-plugin')
+  config.plugins.push(
+    new NodemonPlugin({
+      script: 'index.js',
+      ext: 'js',
+      execMap: {
+        'js': 'babel-node'
+      },
+      watch: [
+        'index.js',
+        'app.js',
+        'routes',
+        'dist'
+      ],
+      env: {
+        'NODE_ENV': ENV
+      },
+      ignore: [
+        'src/*',
+        'node_modules/*',
+        'webpack.config.js',
+        'package.json',
+        'package-lock.json',
+        '.eslintrc.yml',
+        '*.test.js'
+      ],
+      events: {
+        'restart': ''
+      }
+    })
+  )
+  config.plugins.push(
+    new LiveReloadPlugin({
+      delay: 1500
+    })
+  )
+}
+
+module.exports = config

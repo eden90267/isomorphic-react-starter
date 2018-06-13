@@ -88,7 +88,9 @@ const htmlResponse = compose(
 )
 const respond = ({url}, res) =>
   res.status(200).render(
-    'index', htmlResponse(url)
+    'index', {
+      ...htmlResponse(url),
+      scripts: process.env.NODE_ENV === 'development' ? '<script src="http://localhost:35729/livereload.js"></script>' : ''}
   )
 app.use(respond)
 

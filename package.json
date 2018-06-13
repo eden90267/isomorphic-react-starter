@@ -7,9 +7,13 @@
     "build": "rm -rf dist && cross-env NODE_ENV=production webpack --progress -p",
     "prestart": "npm run build",
     "start": "babel-node index.js",
-    "watch:client": "cross-env NODE_ENV=development webpack --watch",
-    "watch:server": "cross-env NODE_ENV=development nodemon index.js --exec babel-node",
-    "dev": "npm-run-all --parallel watch:client watch:server"
+    "watch": "cross-env NODE_ENV=development webpack --watch",
+    "dev": "opener http://localhost:3000 & npm run watch",
+    "lint": "eslint src/js/.",
+    "watch:test": "jest --watch",
+    "test": "jest",
+    "posttest": "npm run lint",
+    "coverage": "opener ./coverage/lcov-report/index.html"
   },
   "repository": {
     "type": "git",
@@ -17,21 +21,19 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/eden90267/isomorphic-react-starter/issues"
   },
   "homepage": "https://github.com/eden90267/isomorphic-react-starter#readme",
   "devDependencies": {
     "autoprefixer": "^8.6.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
+    "deep-freeze": "0.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.9.1",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -42,19 +44,25 @@
     "jest-css-modules": "^1.1.0",
     "node-sass": "^4.9.0",
     "nodemon": "^1.17.5",
-    "npm-run-all": "^4.1.3",
+    "nodemon-webpack-plugin": "^3.0.1",
     "opener": "^1.4.3",
     "postcss-loader": "^2.1.5",
     "precss": "^3.1.2",
     "raw-loader": "^0.5.1",
+    "react-test-renderer": "^15.6.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
     "webpack": "^3.11.0",
-    "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.11.2",
-    "webpack-hot-middleware": "^2.22.2"
+    "webpack-livereload-plugin": "^1.2.0"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.1",
     "connect-flash": "^0.1.1",
@@ -83,5 +91,30 @@
     "serve-favicon": "^2.5.0",
     "striptags": "^3.1.1",
     "uuid": "^3.2.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./__tests__/global.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "global.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(scss)$": "<rootDir>/node_modules/jest-css-modules"
+    },
+    "verbose": true,
+    "collectCoverage": true,
+    "notify": true,
+    "collectCoverageFrom": [
+      "src/js/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   }
 }

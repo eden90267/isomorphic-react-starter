@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
+import {editable, data} from './reducer'
 
 const clientLogger = store => next => action => {
   let result
@@ -26,7 +27,7 @@ const middleware = server => [
 
 const storeFactory = (server = false, initialState = {}) =>
   applyMiddleware(...middleware(server))(createStore)(
-    combineReducers({}),
+    combineReducers({editable, data}),
     initialState
   )
 
