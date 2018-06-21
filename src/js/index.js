@@ -6,7 +6,6 @@ import {BrowserRouter} from 'react-router-dom'
 
 import App from './components/App'
 
-import 'bootstrap/scss/bootstrap.scss'
 import 'all.scss'
 
 const store = storeFactory(false, window.__INITIAL_STATE__)

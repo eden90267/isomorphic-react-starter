@@ -1,6 +1,8 @@
 import React from 'react'
 import {Route, Switch, Link} from 'react-router-dom'
 
+import '../../css/components/App.scss'
+
 import Master from './Master'
 import Detail from './Detail'
 
