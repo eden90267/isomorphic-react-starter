@@ -96,7 +96,7 @@ const config = {
             },
           },
         ],
-        include: path.resolve('src/img'),
+        include: path.resolve('assets/img'),
         exclude:/(node_modules)/,
       }
     ]
